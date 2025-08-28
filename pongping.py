@@ -70,6 +70,9 @@ while game:
     p2.reset()
     ball.reset()
 
+    p1.move_P1()
+    p2.move_P2()
+
     
     display.update()
     clock.tick(60)
