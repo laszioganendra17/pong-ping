@@ -8,8 +8,8 @@ window = display.set_mode((width, height))
 display.set_caption('Pong-Ping Not For All')
 
 
-bcakground_color = (92, 214, 115)
-window.fill(bcakground_color)
+background_color = (92, 214, 115)
+window.fill(background_color)
 
 
 class GameSprite(sprite.Sprite):
@@ -56,6 +56,8 @@ p2 = Player('racket.png', 520, 200, 30, 100, 5)
 ball =GameSprite('tenis_ball.png', 250, 300, 50, 50, 5)
 
 clock = time.Clock()
+speed_x = 3
+speed_y = 3
 
 game = True
 
@@ -64,7 +66,7 @@ while game:
         if e.type == QUIT:
             game = False
 
-    window.fill(bcakground_color)
+    window.fill(background_color)
 
     p1.reset()
     p2.reset()
@@ -72,6 +74,19 @@ while game:
 
     p1.move_P1()
     p2.move_P2()
+
+    #bola bergerak diawal
+    ball.rect.x += speed_x
+    ball.rect.y += speed_y
+
+    #jika bola tabrakan dengan area dibawah dan area diatas maka akan mengarah ke arah sebaliknya/dipantulkan
+    if ball.rect.y > height - 50 or ball.rect.y < 0:
+        speed_y *= -1
+
+    # bola akan
+    if sprite.collide_rect(p1, ball) or sprite.collide_rect(p2, ball):
+        speed_x *= 1 # arah di sumbu x akan di balik (3 jadi -3)
+        speed_y *= 1 
 
     
     display.update()
